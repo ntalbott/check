@@ -1,3 +1,5 @@
+= Check
+
 Check is less testing framework, designed to fit in a single page so you can
 manually verify at a glance that it behaves as advertised. Its sole purpose in
 life is to be simple enough so that it doesn't need tests of its own. Why is
@@ -8,7 +10,7 @@ framework.
 Need an example? You might want to use Check if you're writing a full-blown
 testing framework. It breaks the inherent recursion.
 
-Usage:
+== Usage
 
   class Trivia
     def initialize(fact)
@@ -30,3 +32,10 @@ Usage:
   trivia = Trivia.new('Rubies are red')
   check('Ruby trivia'){trivia.fact == 'Rubies are red'}
 
+== Info
+
+[Author]    Nathaniel Talbott
+            nathaniel@talbott.ws
+[Source]    http://terralien.com/svn/projects/check
+[Copyright] Copyright (c) 2006 Nathaniel Talbott. All Rights Reserved.
+[License]   Ruby License
