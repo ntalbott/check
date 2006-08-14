@@ -1,0 +1,32 @@
+Check is less testing framework, designed to fit in a single page so you can
+manually verify at a glance that it behaves as advertised. Its sole purpose in
+life is to be simple enough so that it doesn't need tests of its own. Why is
+that important? Because sometimes you're coding something up with sufficient
+complexity that it needs tests, and yet you can't use a full-blown testing
+framework.
+
+Need an example? You might want to use Check if you're writing a full-blown
+testing framework. It breaks the inherent recursion.
+
+Usage:
+
+  class Trivia
+    def initialize(fact)
+      @fact = fact
+    end
+    attr_reader :fact
+  end
+
+  # In the same file
+  if __FILE__ == $0
+    require 'check'
+    trivia = Trivia.new('Rubies are red')
+    check('Ruby trivia'){trivia.fact == 'Rubies are red'}
+  end
+
+  # Or, in another file
+  require 'check'
+  require 'trivia'
+  trivia = Trivia.new('Rubies are red')
+  check('Ruby trivia'){trivia.fact == 'Rubies are red'}
+
