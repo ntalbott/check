@@ -1,11 +1,12 @@
 require 'check'
 
-def run_isolated
+def run_isolated(check_all_messages=false)
   read, write = IO.pipe
   fork do
     read.close
     STDERR.reopen(write)
-    $ok = true
+    $check_ok = true
+    $check_all_messages = check_all_messages
 
     yield
   end
@@ -14,7 +15,7 @@ def run_isolated
   read.read
 end
 
-output = run_isolated do
+output = run_isolated(true) do
   check("true"){true}
   check("false"){false}
 end
@@ -33,4 +34,12 @@ end
 
 check("Successful at_exit message") do
   /Success/ =~ run_isolated{check("true"){true}}
+end
+
+check("Uncaught exception") do
+  /FAILURE/ =~ run_isolated{raise 'Test'}
+end
+
+check("No check output") do
+  /ok/ !~ run_isolated{check("true"){true}}
 end
